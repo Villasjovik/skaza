@@ -112,9 +112,10 @@ function initLogo3D(container) {
 
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 
+  // Per-logo light strengths keep the unplated dark Skaza mark readable; defaults preserve other logos.
   // Lights — strong key from upper right corner
   scene.add(new THREE.AmbientLight(0xfff8f0, 0.7));
-  const keyLight = new THREE.DirectionalLight(0xfff2e0, 6.0);
+  const keyLight = new THREE.DirectionalLight(0xfff2e0, parseFloat(container.dataset.keyLight || '6.0'));
   keyLight.position.set(900, 800, 500); // strong upper-right-front
   keyLight.castShadow = hasShadow;
   if (hasShadow) {
@@ -131,11 +132,11 @@ function initLogo3D(container) {
   }
   scene.add(keyLight);
   // Soft fill from lower left — gives shape without flattening shadows
-  const fillLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+  const fillLight = new THREE.DirectionalLight(0xffeedd, parseFloat(container.dataset.fillLight || '1.2'));
   fillLight.position.set(-500, -200, 400);
   scene.add(fillLight);
   // Rim from upper-left-back for edge definition
-  const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  const rimLight = new THREE.DirectionalLight(0xffffff, parseFloat(container.dataset.rimLight || '1.8'));
   rimLight.position.set(-400, 400, -600);
   scene.add(rimLight);
 
